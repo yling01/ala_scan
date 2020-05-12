@@ -6,9 +6,6 @@ Created by Tim Ling @ YSL lab
 (This script is based on D090_Ala_scan.py from Gray's Lab @ JHU)
 (https://graylab.jhu.edu/pyrosetta/downloads/scripts/demo/D090_Ala_scan.py)
 
-Updated by Boon Uranukul, 6/9/12
-Simplified special constant seed initialization ~ Labonte)
-
 Reference:
 	
 	Gavenonis, Jason, et al. “Comprehensive Analysis of Loops at Protein-Protein Interfaces for Macrocycle Design.” 
