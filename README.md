@@ -9,7 +9,7 @@ Created by Tim Ling @ YSL lab
 * scipy
 
 ### PyRosetta
-* pyrosetta 4
+* [pyrosetta 4](http://www.pyrosetta.org/dow) installed through conda (pyrosetta-2020.02+release.22ef835b4a2-py37_0)
 
 
 ## Reference
@@ -30,13 +30,13 @@ Created by Tim Ling @ YSL lab
 
 	1. Identify the interface residues. A resiude is on the interface if:
 		a. A residue has a side chain having at least one atom 
-		   within a sphere with 4A radius of an atom belonging 
+		   within a sphere with 4Å radius of an atom belonging 
 		   to the other partner in the complex.
 
 		b. A residue that becomes significantly buried upon 
 		   complex formation, as measured by an increase in the
 		   number of CB atoms within a sphere with a radius of 
-		   8A around the CB atom of the residue of interest.
+		   8Å around the CB atom of the residue of interest.
 	
 	2. Mutate the interface residue one by one to a target amino acid (alanine by defulat).
 
