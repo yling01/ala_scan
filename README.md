@@ -3,10 +3,18 @@ Alanine Scan Protocol
 
 Created by Tim Ling @ YSL lab
 
-(This script is based on D090_Ala_scan.py from Gray's Lab @ JHU)
-(https://graylab.jhu.edu/pyrosetta/downloads/scripts/demo/D090_Ala_scan.py)
+### Dependencies
 
-Reference:
+#### Python
+* numpy
+
+#### Lua 
+You will need the following packages:
+* hdf5
+* nngraph
+
+
+## Reference:
 	
 	Gavenonis, Jason, et al. “Comprehensive Analysis of Loops at Protein-Protein Interfaces for Macrocycle Design.” 
 		Nature Chemical Biology, vol. 10, no. 9, 2014, pp. 716–722., doi:10.1038/nchembio.1580.
@@ -43,4 +51,13 @@ The ala_scan.py performes computational Alanine scan by
 	   Note that both the wt and the mt are refolded.
 
 	4. Calculate ddG which is the binding energy difference between the mt and wt.
+
+#### Acknowledgments
+The implementation utilizes code from the following:
+* [Evan H. Baugh's D090_Ala_scan.py](https://graylab.jhu.edu/pyrosetta/downloads/scripts/demo/D090_Ala_scan.py)
+
+### Quickstart
+
+
+
 
