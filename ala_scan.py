@@ -162,7 +162,7 @@ def scanning(pdb_filename, partners, mutant_aa = 'A',
     ddG_scorefxn.set_weight(core.scoring.hbond_bb_sc, 0.49) 
 
     num_res = pose.size()
-    interface_mask = get_interface_residue(pose, num_res, partners, interface_cutoff, 6.5) #get interface res
+    interface_mask = get_interface_residue(pose, num_res, partners, interface_cutoff, neighbor_cutoff) #get interface res
 
 
     for trial in range( trials ): #perform ala scanning
@@ -418,7 +418,7 @@ parser.add_option('--mutant_aa', dest = 'mutant_aa',
     default = 'A',   
     help = 'the amino acid to mutate all residues to')
 parser.add_option('--neighbor_cutoff', dest = 'neighbor_cutoff',
-    default = '6.5',   
+    default = '8.0',   
     help = 'the distance (in Angstroms) to detect neighbors')
 parser.add_option('--trials', dest='trials',
     default = '20',    
