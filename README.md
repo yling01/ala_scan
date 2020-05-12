@@ -1,8 +1,10 @@
 # ala_scan
 Alanine Scan Protocol
+
 Created by Tim Ling @ YSL lab
 
 (This script is based on D090_Ala_scan.py from Gray's Lab @ JHU)
+
 Reference:
 	
 	Gavenonis, Jason, et al. “Comprehensive Analysis of Loops at Protein-Protein Interfaces for Macrocycle Design.” 
