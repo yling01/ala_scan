@@ -50,17 +50,17 @@ Created by Tim Ling @ YSL lab
 
 	4. Calculate ddG which is the binding energy difference between the mt and wt.
 
-### Quickstart
+## Quickstart
 	
 	To perform computational Alanine scan, do 
 
 		python ala_scan.py --pdb_filename test.pdb --partners chainA_chainB 
-												  [--mutant_aa A] [--neighbor_cutoff 8.0] 
-												  [--trials 20] [--trial_output ddG_out] 
-												  [--interface_cutoff 4] [--repack_cutoff 6.5] [--output 0]
+		[--mutant_aa A] [--neighbor_cutoff 8.0] 
+		[--trials 20] [--trial_output ddG_out] 
+		[--interface_cutoff 4] [--repack_cutoff 6.5] [--output 0]
 
 	Description of the flags:
-		
+
 		--pdb_filename: the name of the PDB file to load pose from. 
 
 		--partners: the interacting chains. (Note: there can only be two chains.)
@@ -79,7 +79,7 @@ Created by Tim Ling @ YSL lab
 
 		--output: if to write each mutant into PDB files.
 
-#### Acknowledgments
+## Acknowledgments
 The implementation utilizes code from the following:
 * [Evan H. Baugh's D090_Ala_scan.py](https://graylab.jhu.edu/pyrosetta/downloads/scripts/demo/D090_Ala_scan.py)
 
