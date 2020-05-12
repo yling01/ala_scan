@@ -1,25 +1,20 @@
 #!usr/bin/env python
 
-from __future__ import print_function
-
 from pyrosetta import *
 from pyrosetta.rosetta import *
-from decimal import Decimal
 from pyrosetta.rosetta.protocols.docking import calc_interaction_energy
 from pyrosetta.rosetta.protocols.scoring import Interface
-import numpy as np
-import matplotlib.pyplot as plt
-import optparse    
-from pyrosetta.rosetta.protocols.scoring import Interface
-from pyrosetta import *
-from pyrosetta.rosetta import *
-from decimal import Decimal
+
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.spatial.distance import *
+
 import re
 import os
 import sys
+import optparse    
+from decimal import Decimal
+
 init(extra_options = ["-restore_pre_talaris_2013_behavior", "-mute all", "-constant_seed", "-ignore_zero_occupancy false"])
 
 '''
@@ -410,7 +405,7 @@ def scanning_analysis(trial_output, hot_cutoff=0.6):
 parser = optparse.OptionParser()
 parser.add_option('--pdb_filename', dest = 'pdb_filename',
     default = 'NO_INPUT',   
-    help = 'the PDB file containing the protein to refine')
+    help = 'the PDB file containing the protein')
 parser.add_option('--partners', dest = 'partners',
     default = 'NO_INPUT',    
     help = 'the relative chain partners for docking')
@@ -430,11 +425,11 @@ parser.add_option('--interface_cutoff', dest = 'interface_cutoff',
     default = '4.0',    
     help = 'the distance (in Angstroms) to detect interface residues')
 parser.add_option('--repack_cutoff', dest = 'repack_cutoff',
-    default = '6.5',    # default to 8.0 Angstroms
+    default = '6.5',    
     help = 'the distance (in Angstroms) to detect residues for repacking\
         near the interface')
 parser.add_option('--output', dest = 'output',
-    default = '',    # default off, do now write to file
+    default = '',    
     help = 'if True, mutant structures are written to PDB files')
 
 (options,args) = parser.parse_args()

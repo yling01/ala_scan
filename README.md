@@ -1,20 +1,18 @@
 # ala_scan
-Alanine Scan Protocol
-
 Created by Tim Ling @ YSL lab
 
-### Dependencies
+## Dependencies
 
-#### Python
+### Python
 * numpy
+* matplotlib
+* scipy
 
-#### Lua 
-You will need the following packages:
-* hdf5
-* nngraph
+### PyRosetta
+* pyrosetta 4
 
 
-## Reference:
+## Reference
 	
 	Gavenonis, Jason, et al. “Comprehensive Analysis of Loops at Protein-Protein Interfaces for Macrocycle Design.” 
 		Nature Chemical Biology, vol. 10, no. 9, 2014, pp. 716–722., doi:10.1038/nchembio.1580.
@@ -28,7 +26,7 @@ You will need the following packages:
 	Siegert, Timothy R., et al. “Identifying Loop-Mediated Protein–Protein Interactions Using LoopFinder.” 
 		Methods in Molecular Biology Modeling Peptide-Protein Interactions, 2017, pp. 255–277., doi:10.1007/978-1-4939-6798-8_15.	
 
-The ala_scan.py performes computational Alanine scan by
+## Protocol Description
 
 	1. Identify the interface residues. A resiude is on the interface if:
 		a. A residue has a side chain having at least one atom 
@@ -52,11 +50,39 @@ The ala_scan.py performes computational Alanine scan by
 
 	4. Calculate ddG which is the binding energy difference between the mt and wt.
 
+### Quickstart
+	
+	To perform computational Alanine scan, do 
+
+		python ala_scan.py --pdb_filename test.pdb --partners chainA_chainB 
+												  [--mutant_aa A] [--neighbor_cutoff 8.0] 
+												  [--trials 20] [--trial_output ddG_out] 
+												  [--interface_cutoff 4] [--repack_cutoff 6.5] [--output 0]
+
+	Description of the flags:
+		
+		--pdb_filename: the name of the PDB file to load pose from. 
+
+		--partners: the interacting chains. (Note: there can only be two chains.)
+
+		--mutant_aa: the target mutation amino acid
+
+		--neighbor_cutoff: the cutoff for interface criteria 1b. 
+
+		--trials: the number of trials to perform.
+
+		--trial_output: the name of the files to write output in.
+
+		--interface_cutoff: the cutoff for interface criteria 1a. 
+
+		--repack_cutoff: the cutoff for residue repacking from the site of mutation.
+
+		--output: if to write each mutant into PDB files.
+
 #### Acknowledgments
 The implementation utilizes code from the following:
 * [Evan H. Baugh's D090_Ala_scan.py](https://graylab.jhu.edu/pyrosetta/downloads/scripts/demo/D090_Ala_scan.py)
 
-### Quickstart
 
 
 
