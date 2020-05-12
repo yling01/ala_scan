@@ -1,5 +1,5 @@
 #!usr/bin/env python
-#Last edited: 0512
+
 from __future__ import print_function
 
 from pyrosetta import *
@@ -73,6 +73,7 @@ def get_interface_residue(pose, num_res, partners, interface_cutoff, neighbor_cu
             if min_dist < interface_cutoff:
                 interface_mask[i] = True
                 interface_mask[j] = True
+                
 
     ##############Explicitly calculating the CB-CB distances##############
     for i in range(num_res - 1): 
@@ -81,8 +82,11 @@ def get_interface_residue(pose, num_res, partners, interface_cutoff, neighbor_cu
                 continue
             CB_dist = euclidean(CB_pos[i], CB_pos[j])
             if CB_dist < neighbor_cutoff:
-                interface_mask[i] = True
-                interface_mask[j] = True
+                if pose.pdb_info().chain(i + 1) == pose.pdb_info().chain(j + 1): #skip if on the same chain
+                    continue
+                else:
+                    interface_mask[i] = True
+                    interface_mask[j] = True
     ######################################################################
 
     #remove excluded res
