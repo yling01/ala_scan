@@ -88,7 +88,6 @@ def get_interface_residue(pose, num_res, partners, interface_cutoff, neighbor_cu
     for i in exlucde_position:
         interface_mask[i - 1] = False
 
-    np.savetxt("PyRosetta_interface.txt", interface_mask, fmt="%d")
     return interface_mask
 
 '''
