@@ -6,6 +6,7 @@ def main():
     for pdb_filename in pdb_files:
         if pdb_filename == "test.pdb" or pdb_filename[-3:] != "pdb":
             continue
+        print("Processing %s ..." % pdb_filename)
         partners = "A_B"
         mutant_aa = "A"
         neighbor_cutoff = 8.0
