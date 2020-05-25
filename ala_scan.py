@@ -132,7 +132,7 @@ def scanning(pdb_filename, partners, mutant_aa = 'A',
     if partners == "NO_INPUT":
         partners = input("No partner chains were read, please enter the partner chains below separated by \'_\'\n")
 
-    pdb_code = pdb_filename[0:4]
+    pdb_code = pdb_filename.split(".")[0]
     global file_directory
 
     file_directory = 'PyRosettaResults/' + pdb_code + '_' + partners + '/'
