@@ -69,8 +69,6 @@ def get_interface_residue(pose, num_res, partners, interface_cutoff, neighbor_cu
                 interface_mask[i] = True
                 interface_mask[j] = True
                 
-
-    ##############Explicitly calculating the CB-CB distances##############
     for i in range(num_res - 1): 
         for j in range(i + 1, num_res):
             if "GLY" in [pose.residue(i + 1).name(), pose.residue(j + 1).name()]:
@@ -82,7 +80,6 @@ def get_interface_residue(pose, num_res, partners, interface_cutoff, neighbor_cu
                 else:
                     interface_mask[i] = True
                     interface_mask[j] = True
-    ######################################################################
 
     #remove excluded res
     for i in exlucde_position:
@@ -401,52 +398,54 @@ def scanning_analysis(trial_output, hot_cutoff=0.6):
         for hotspot in hotspots:
             fo.write( hotspot + "\n" )
 
-parser = optparse.OptionParser()
-parser.add_option('--pdb_filename', dest = 'pdb_filename',
-    default = 'NO_INPUT',   
-    help = 'the PDB file containing the protein')
-parser.add_option('--partners', dest = 'partners',
-    default = 'NO_INPUT',    
-    help = 'the relative chain partners for docking')
-parser.add_option('--mutant_aa', dest = 'mutant_aa',
-    default = 'A',   
-    help = 'the amino acid to mutate all residues to')
-parser.add_option('--neighbor_cutoff', dest = 'neighbor_cutoff',
-    default = '8.0',   
-    help = 'the distance (in Angstroms) to detect neighbors')
-parser.add_option('--trials', dest='trials',
-    default = '20',    
-    help = 'the number of trials to perform')
-parser.add_option('--trial_output', dest = 'trial_output',
-    default = 'ddG_out',    
-    help = 'the name preceding all output files')
-parser.add_option('--interface_cutoff', dest = 'interface_cutoff',
-    default = '4.0',    
-    help = 'the distance (in Angstroms) to detect interface residues')
-parser.add_option('--repack_cutoff', dest = 'repack_cutoff',
-    default = '6.5',    
-    help = 'the distance (in Angstroms) to detect residues for repacking\
-        near the interface')
-parser.add_option('--output', dest = 'output',
-    default = '',    
-    help = 'if True, mutant structures are written to PDB files')
+if __name__ == "__main__":
+    parser = optparse.OptionParser()
+    parser.add_option('--pdb_filename', dest = 'pdb_filename',
+        default = 'NO_INPUT',   
+        help = 'the PDB file containing the protein')
+    parser.add_option('--partners', dest = 'partners',
+        default = 'NO_INPUT',    
+        help = 'the relative chain partners for docking')
+    parser.add_option('--mutant_aa', dest = 'mutant_aa',
+        default = 'A',   
+        help = 'the amino acid to mutate all residues to')
+    parser.add_option('--neighbor_cutoff', dest = 'neighbor_cutoff',
+        default = '8.0',   
+        help = 'the distance (in Angstroms) to detect neighbors')
+    parser.add_option('--trials', dest='trials',
+        default = '20',    
+        help = 'the number of trials to perform')
+    parser.add_option('--trial_output', dest = 'trial_output',
+        default = 'ddG_out',    
+        help = 'the name preceding all output files')
+    parser.add_option('--interface_cutoff', dest = 'interface_cutoff',
+        default = '4.0',    
+        help = 'the distance (in Angstroms) to detect interface residues')
+    parser.add_option('--repack_cutoff', dest = 'repack_cutoff',
+        default = '6.5',    
+        help = 'the distance (in Angstroms) to detect residues for repacking\
+            near the interface')
+    parser.add_option('--output', dest = 'output',
+        default = '',    
+        help = 'if True, mutant structures are written to PDB files')
 
-(options,args) = parser.parse_args()
+    (options,args) = parser.parse_args()
 
 
-# PDB file option
-pdb_filename = options.pdb_filename
-partners = options.partners
-# scanning options
-mutant_aa = options.mutant_aa
-neighbor_cutoff = float(options.neighbor_cutoff)
-interface_cutoff = float(options.interface_cutoff)
-repack_cutoff = float(options.repack_cutoff)
-# trials options
-trials = int(options.trials)
-trial_output = options.trial_output
-output = bool(options.output)
+    # PDB file option
+    pdb_filename = options.pdb_filename
+    partners = options.partners
+    # scanning options
+    mutant_aa = options.mutant_aa
+    neighbor_cutoff = float(options.neighbor_cutoff)
+    interface_cutoff = float(options.interface_cutoff)
+    repack_cutoff = float(options.repack_cutoff)
+    # trials options
+    trials = int(options.trials)
+    trial_output = options.trial_output
+    output = bool(options.output)
 
-scanning(pdb_filename, partners, mutant_aa,
-        neighbor_cutoff, interface_cutoff, repack_cutoff,
-        trials, trial_output, output)
+    scanning(pdb_filename, partners, mutant_aa,
+            neighbor_cutoff, interface_cutoff, repack_cutoff,
+            trials, trial_output, output)
+
