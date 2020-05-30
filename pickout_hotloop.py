@@ -4,7 +4,8 @@ global min_residue
 min_residue = 3
 max_distance = 10
 from os import path
-
+import shutil 
+import sys
 def extract_files():
     start = "PyRosettaResults/"
     root = []
@@ -64,22 +65,38 @@ def identify_hotloop(hotspots):
     return False
 
 if __name__ == '__main__':
+    
     if path.exists("results_filtered.txt"):
         os.remove("results_filtered.txt")
     hotloop_found = False
     for directory in extract_files():
+        file_directory_head = "Results_Clean"
         hotspots = extract_hotspots(directory)
         if identify_hotloop(hotspots):
+            pdb_filename = "../" + directory.split("/")[1][0:-4] + ".pdb"
+            assert os.path.exists(pdb_filename)
+            file_directory = "/".join((file_directory_head, directory.split("/")[1][0:-4]))
+            if not os.path.exists(file_directory):
+                os.makedirs(file_directory) 
+            pdb_copy = "/".join((file_directory, pdb_filename.split("/")[1]))
+            shutil.copyfile(pdb_filename, pdb_copy)
+            file_name = file_directory + "/out_hotspots.txt"
             hotloop_found = True
+            write = False
             result_file = directory + "/ddG_out_total.txt"
             with open(result_file, "r") as fi:
                 lines = fi.readlines()
                 with open("results_filtered.txt", "a") as fo:
-                    header = "=> " + result_file + " <=\n"
-                    fo.write(header)
-                    for line in lines:
-                        fo.write(line)
-                    fo.write("\n\n")
+                    with open(file_name, "w+") as fo_separate:
+                        header = "=> " + result_file + " <=\n"
+                        fo.write(header)
+                        for line in lines:
+                            fo.write(line)
+                            if write:
+                                fo_separate.write(line)
+                            elif line == "Likely Hotspot Residues\n":
+                                write = True
+                        fo.write("\n\n")
     if not hotloop_found:
         print("No Potential Hotloop Found")
 
