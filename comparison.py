@@ -15,6 +15,15 @@ def sort_function(a):
         subchains[i] = int(subchains[i][1:])
     return subchains
 
+def sort_function_chain(a):
+    subchains = a.split("_")
+    for i in range(len(subchains)):
+        subchains[i] = int(subchains[i])
+    return subchains
+
+def sort_function_zip(a):
+    return sort_function_chain(a[0])
+
 def extract_head_directory():
     start = os.getcwd()
     root = []
@@ -93,6 +102,11 @@ def assign_heat(hotspots):
 
 
 if __name__ == '__main__':
+    reverse = sys.argv[1]
+    if reverse == "True":
+        reverse = True
+    else:
+        reverse = False
     root = extract_head_directory()
     d_inter_chain = {}
     d_intra_chain = {}
@@ -106,9 +120,14 @@ if __name__ == '__main__':
             subchains = file.split("/")[-1].split("_")[0:2]
             for i in range(len(subchains)):
                 subchains[i] = subchains[i][1:]
+            if len(chains) == 2:
+                if reverse:
+                    subchains.reverse()
             subchains = "_".join(subchains)
             temp_index.append(subchains)
             temp_heat.append(assign_heat(extract_hotspots(file)))
+        temp_heat = [x for _, x in sorted(zip(temp_index, temp_heat), key=sort_function_zip)]
+        temp_index.sort(key=sort_function_chain)
         if len(chains) == 1:
             d_intra_chain.update({chains: temp_heat})
             if len(intra_chain_index) == 0:
