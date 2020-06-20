@@ -79,6 +79,30 @@ Created by Tim Ling @ YSL lab
 
 		--output: if to write each mutant into PDB files.
 
+## Conducting Large-Scale Computational Alanine Scan
+	
+	Because ala_scan.py only executes alanine scan for one PDB structure,
+	repeating the same commands for many structures can be tedious.
+	Four helper scripts are provided for convience.
+	
+	1. parser.py:
+	   Simply git clone the entire ala_scan folder to the directory where multiple 
+	   PDB files are located. Then go to the ala_scan folder and use
+	
+		python parser.py 
+
+	  The script will search for all the PDB files in the upper directory and conducts 
+	  alanine scan for all the structures.
+
+	2. comparison.py:
+	   This script looks at all the results files and generates a spreadsheet of
+	   results. -1 indicates that no hot spot residues were found, 
+	   0 indicates that there are hot spot residues but no hot loop was found,
+	   and 1 indicates that hot loops were found.
+
+	
+	3. pickout_hotloop.py and identify_hotloop.py:
+	   These two scripts filters the results and writes the important hot loops into a file.
 ## Acknowledgments
 The implementation utilizes code from the following:
 * [Evan H. Baugh's D090_Ala_scan.py](https://graylab.jhu.edu/pyrosetta/downloads/scripts/demo/D090_Ala_scan.py)

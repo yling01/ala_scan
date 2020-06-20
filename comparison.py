@@ -149,11 +149,3 @@ if __name__ == '__main__':
     df_inter_chain.to_csv("inter.csv")
     df_intra_chain.to_csv("intra.csv")
 
-
-
-
-
-
-
-
-
