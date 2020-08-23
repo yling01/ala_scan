@@ -143,14 +143,14 @@ def scanning(pdb_filename, partners, mutant_aa = 'A',
     if len(chains_all) != 2:
         sys.exit("ERROR: More than two chains are found in the PDB file\n")
 
-    ddG_scorefxn = create_score_function('pre_talaris_2013_standard','score12') #sf setup
+    ddG_scorefxn = create_score_function('pre_talaris_2013_standard','score12') 
     ddG_scorefxn.set_weight(core.scoring.fa_atr, 0.44)
     ddG_scorefxn.set_weight(core.scoring.fa_rep, 0.07)
     ddG_scorefxn.set_weight(core.scoring.fa_sol, 0.32)
     ddG_scorefxn.set_weight(core.scoring.hbond_bb_sc, 0.49)
 
     num_res = pose.size()
-    interface_mask = get_interface_residue(pose, num_res, partners, interface_cutoff, neighbor_cutoff) #get interface res
+    interface_mask = get_interface_residue(pose, num_res, partners, interface_cutoff, neighbor_cutoff) 
 
 
     for trial in range( trials ): 
@@ -165,7 +165,6 @@ def scanning(pdb_filename, partners, mutant_aa = 'A',
                 ddG_mutants[i] = interface_ddG(pose, i, mutant_aa,
                     ddG_scorefxn, repack_cutoff, filename ) 
 
-        #output results
         residues = list( ddG_mutants.keys() )
         display = [pose.pdb_info().chain(i) + " " + str(pose.pdb_info().number(i))
         + " " + pose.sequence()[i - 1] + '\t' + str(ddG_mutants[i]) + '\n' for i in residues]
@@ -203,27 +202,14 @@ Does:
 '''
 def interface_ddG( pose, mutant_position, mutant_aa, scorefxn,
         cutoff, out_filename = ''):
-    # 1. create a reference copy of the pose
-    wt = Pose()    # the "wild-type"
+    wt = Pose()    
     wt.assign(pose)
 
-    # 2. create a copy of the pose for mutation
     mutant = Pose()
     mutant.assign(pose)
 
-    # 3. mutate the desired residue
-    # the pack_radius argument of mutate_residue (see below) is redundant
-    #    for this application since the area around the mutation is already
-    #    repacked
-
     pyrosetta.toolbox.mutants.mutate_residue(mutant, mutant_position,
                                                  mutant_aa, 0.0, scorefxn)
-    # 4. calculate the "interaction energy"
-    # the method calc_interaction_energy is exposed in PyRosetta however it
-    #    does not alter the protein conformation after translation and may miss
-    #    significant interactions
-    # an alternate method for manually separating and scoring is provided called
-    #    calc_binding_energy (see Interaction Energy vs. Binding Energy below)
 
     wt_score = calc_binding_energy(wt, scorefxn,
         mutant_position, cutoff)
@@ -232,7 +218,6 @@ def interface_ddG( pose, mutant_position, mutant_aa, scorefxn,
 
     ddg = mut_score - wt_score
 
-    # -write the mutant structure to a PDB file
     if out_filename:
         mutant.dump_pdb(out_filename)
 
@@ -288,8 +273,6 @@ def calc_binding_energy(pose, scorefxn, center, cutoff):
     xyz.y = 0.0    
     xyz.z = 0.0    
                    
-
-
     chain2starts = len(pose.chain_sequence(1)) + 1
     for r in range(chain2starts, test_pose.total_residue() + 1):
         for a in range(1, test_pose.residue(r).natoms() + 1):
