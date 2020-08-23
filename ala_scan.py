@@ -136,24 +136,24 @@ def scanning(pdb_filename, partners, mutant_aa = 'A',
     if not os.path.exists(file_directory):
         os.makedirs(file_directory)
 
-    pose = pose_from_file(pdb_filename) 
+    pose = pose_from_file(pdb_filename)
 
 
     chains_all = [i[1] for i in list(pyrosetta.rosetta.core.pose.conf2pdb_chain(pose).items())]
     if len(chains_all) != 2:
         sys.exit("ERROR: More than two chains are found in the PDB file\n")
 
-    ddG_scorefxn = create_score_function('pre_talaris_2013_standard','score12') 
+    ddG_scorefxn = create_score_function('pre_talaris_2013_standard','score12')
     ddG_scorefxn.set_weight(core.scoring.fa_atr, 0.44)
     ddG_scorefxn.set_weight(core.scoring.fa_rep, 0.07)
     ddG_scorefxn.set_weight(core.scoring.fa_sol, 0.32)
     ddG_scorefxn.set_weight(core.scoring.hbond_bb_sc, 0.49)
 
     num_res = pose.size()
-    interface_mask = get_interface_residue(pose, num_res, partners, interface_cutoff, neighbor_cutoff) 
+    interface_mask = get_interface_residue(pose, num_res, partners, interface_cutoff, neighbor_cutoff)
 
 
-    for trial in range( trials ): 
+    for trial in range( trials ):
         ddG_mutants = {}
         for i in range(1, pose.total_residue() + 1):
             if interface_mask[i - 1]:
@@ -163,7 +163,9 @@ def scanning(pdb_filename, partners, mutant_aa = 'A',
                         pose.sequence()[i-1] +\
                         str(pose.pdb_info().number(i)) + '->' + mutant_aa
                 ddG_mutants[i] = interface_ddG(pose, i, mutant_aa,
-                    ddG_scorefxn, repack_cutoff, filename ) 
+                                               ddG_scorefxn,
+                                               repack_cutoff,
+                                               filename )
 
         residues = list( ddG_mutants.keys() )
         display = [pose.pdb_info().chain(i) + " " + str(pose.pdb_info().number(i))
@@ -202,19 +204,19 @@ Does:
 '''
 def interface_ddG( pose, mutant_position, mutant_aa, scorefxn,
         cutoff, out_filename = ''):
-    wt = Pose()    
+    wt = Pose()
     wt.assign(pose)
 
     mutant = Pose()
     mutant.assign(pose)
 
     pyrosetta.toolbox.mutants.mutate_residue(mutant, mutant_position,
-                                                 mutant_aa, 0.0, scorefxn)
+                                             mutant_aa, 0.0, scorefxn)
 
     wt_score = calc_binding_energy(wt, scorefxn,
-        mutant_position, cutoff)
+                                   mutant_position, cutoff)
     mut_score = calc_binding_energy(mutant, scorefxn,
-        mutant_position, cutoff)
+                                    mutant_position, cutoff)
 
     ddg = mut_score - wt_score
 
@@ -248,8 +250,8 @@ def calc_binding_energy(pose, scorefxn, center, cutoff):
     test_pose = Pose()
     test_pose.assign(pose)
 
-    tf = standard_task_factory()    
-    tf.push_back(core.pack.task.operation.RestrictToRepacking())    
+    tf = standard_task_factory()
+    tf.push_back(core.pack.task.operation.RestrictToRepacking())
 
     prevent_repacking = core.pack.task.operation.PreventRepacking()
 
@@ -269,15 +271,14 @@ def calc_binding_energy(pose, scorefxn, center, cutoff):
     before = scorefxn(test_pose)
 
     xyz = rosetta.numeric.xyzVector_double_t()
-    xyz.x = 500.0    
-    xyz.y = 0.0    
-    xyz.z = 0.0    
-                   
+    xyz.x = 500.0
+    xyz.y = 0.0
+    xyz.z = 0.0
+
     chain2starts = len(pose.chain_sequence(1)) + 1
     for r in range(chain2starts, test_pose.total_residue() + 1):
         for a in range(1, test_pose.residue(r).natoms() + 1):
-            test_pose.residue(r).set_xyz(a,
-                test_pose.residue(r).xyz(a) + xyz)
+            test_pose.residue(r).set_xyz(a, test_pose.residue(r).xyz(a) + xyz)
 
     packer.apply(test_pose)
 
@@ -308,7 +309,7 @@ def scanning_analysis(trial_output, hot_cutoff=0.6):
     filename = filenames[0]
     f = open(filename , 'r')
     data = f.readlines()
-    data = [i.strip() for i in data]   
+    data = [i.strip() for i in data]
     f.close()
 
     mutants = [i.split('\t')[0] for i in data]
